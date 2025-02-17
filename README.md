@@ -35,7 +35,7 @@ Below is a structured flowchart representing my learning journey through this ch
 
 ### LocalNet Running
 ![LocalNet Running](/assets/localnet_running.png)
-(That's power from ChainsawMan on the background XD)
+(That's power from ChainsawMan in the background XD)
 
 ### Wallet Created
 ![Wallet Created](/assets/wallet_created.png)
@@ -71,6 +71,52 @@ Below is a structured flowchart representing my learning journey through this ch
 
 - **Application Call (TestNet):**
   [View Transaction](https://lora.algokit.io/testnet/transaction/SDXRML7KAT326H5HNBCJ6YIZBZONFZR2RKJLBQALM2VH5WNNEWGA)
+
+
+## 🛠 Running Tests
+
+To ensure the smart contract is properly built, tested, and deployed, follow these steps:
+
+### 1️⃣ Start the Local Server
+Run the local sandbox environment:
+```sh
+algokit localnet start
+```
+
+### 2️⃣ Create a Wallet
+Generate a new wallet with a custom name:
+```sh
+algokit wallet new {name}
+```
+Important: Fund your wallet using Goal or Lora.
+
+### 3️⃣ Build the Application (If Necessary)
+If the application requires compilation, run:
+```sh
+algokit project run build
+```
+
+### 4️⃣ Access the project directory
+```sh
+cd projects/devrel_assessment
+```
+
+### 5️⃣ Run the Tests
+Execute the test suite using `pytest`:
+```sh
+poetry run python -m pytest smart_contracts/hello_world/hello_world_test.py
+```
+
+You should see something like that:
+
+- **Successful Tests:**
+![Tests Passing](/assets/tests_passing.png)
+
+### 6️⃣ Deploy the Application (Optional)
+If you want to deploy your contract:
+```sh
+algokit project deploy
+```
 
 
 ##  Final Thoughts
