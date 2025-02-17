@@ -1,0 +1,112 @@
+#pragma version 10
+#pragma typetrack false
+
+// smart_contracts.hello_world.contract.HelloWorld.__algopy_entrypoint_with_init() -> uint64:
+main:
+    // smart_contracts/hello_world/contract.py:13
+    // class HelloWorld(ARC4Contract):
+    txn NumAppArgs
+    bz main_bare_routing@6
+    pushbytes 0x02bece11 // method "hello(string)string"
+    txna ApplicationArgs 0
+    match main_hello_route@5
+
+main_after_if_else@8:
+    // smart_contracts/hello_world/contract.py:13
+    // class HelloWorld(ARC4Contract):
+    pushint 0 // 0
+    return
+
+main_hello_route@5:
+    // smart_contracts/hello_world/contract.py:20
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/hello_world/contract.py:13
+    // class HelloWorld(ARC4Contract):
+    txna ApplicationArgs 1
+    extract 2 0
+    // smart_contracts/hello_world/contract.py:20
+    // @abimethod()
+    callsub hello
+    dup
+    len
+    itob
+    extract 6 2
+    swap
+    concat
+    pushbytes 0x151f7c75
+    swap
+    concat
+    log
+    pushint 1 // 1
+    return
+
+main_bare_routing@6:
+    // smart_contracts/hello_world/contract.py:13
+    // class HelloWorld(ARC4Contract):
+    txn OnCompletion
+    bnz main_after_if_else@8
+    txn ApplicationID
+    !
+    assert // can only call when creating
+    pushint 1 // 1
+    return
+
+
+// smart_contracts.hello_world.contract.HelloWorld.hello(name: bytes) -> bytes:
+hello:
+    // smart_contracts/hello_world/contract.py:20-21
+    // @abimethod()
+    // def hello(self, name: String) -> String:
+    proto 1 1
+    // smart_contracts/hello_world/contract.py:32
+    // name != String("")
+    frame_dig -1
+    pushbytes ""
+    !=
+    // smart_contracts/hello_world/contract.py:31-33
+    // assert (
+    //     name != String("")
+    // ), "Name must not be empty"
+    assert // Name must not be empty
+    // smart_contracts/hello_world/contract.py:35
+    // name.bytes.length <= UInt64(128)
+    frame_dig -1
+    len
+    pushint 128 // 128
+    <=
+    // smart_contracts/hello_world/contract.py:34-36
+    // assert (
+    //     name.bytes.length <= UInt64(128)
+    // ), "Name too long. Maximum 128 bytes allowed"
+    assert // Name too long. Maximum 128 bytes allowed
+    // smart_contracts/hello_world/contract.py:41
+    // phrase = String("").join((greeting, name))
+    pushbytes "Hello, "
+    frame_dig -1
+    concat
+    // smart_contracts/hello_world/contract.py:43
+    // log(String("Storing greeting: ").join((phrase,)))
+    dup
+    log
+    // smart_contracts/hello_world/contract.py:57
+    // self.p_box[user_address] = phrase
+    pushbytes 0x70
+    // smart_contracts/hello_world/contract.py:56
+    // user_address = Address(Txn.sender)
+    txn Sender
+    // smart_contracts/hello_world/contract.py:57
+    // self.p_box[user_address] = phrase
+    concat
+    dup
+    box_del
+    pop
+    dig 1
+    box_put
+    // smart_contracts/hello_world/contract.py:47
+    // return phrase
+    retsub
