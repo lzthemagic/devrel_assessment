@@ -4,7 +4,7 @@ This challenge was an exciting deep dive into understanding how Smart Contracts 
 
 ## 📌 Key Learnings
 
-Here are the main concepts I mastered throughout this challenge:
+Here are the main concepts I learned throughout this challenge:
 
 | Topic                           | Key Takeaways |
 |---------------------------------|--------------|
